@@ -1,4 +1,4 @@
-import type { ReactNode, Reducer } from "react";
+import type { ReactNode } from "react";
 import { createContext, useReducer, useContext } from "react";
 
 const defaultState = { logoVisible: true };

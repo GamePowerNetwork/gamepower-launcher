@@ -2,32 +2,68 @@ import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
+
+require('update-electron-app')()
 const {ipcMain} = require('electron');
 
 var child = require('child_process').exec;
-let win: BrowserWindow | null = null;
+let mainWindow: BrowserWindow | null = null;
+
+// Deep linked url
+let deeplinkingUrl: string[] | string;
+
+// Force Single Instance Application
+const gotTheLock = app.requestSingleInstanceLock()
+if (gotTheLock) {
+  app.on('second-instance', (e, argv) => {
+    // Someone tried to run a second instance, we should focus our window.
+
+    // Protocol handler for win32
+    // argv: An array of the second instance’s (command line / deep linked) arguments
+    if (process.platform == 'win32') {
+      // Keep only command line / deep linked arguments
+      deeplinkingUrl = argv.slice(1)
+    }
+    logEverywhere('app.makeSingleInstance# ' + deeplinkingUrl)
+
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+} else {
+  app.quit();
+}
 
 function createWindow() {
-  win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1380,
     height: 800,
     minWidth: 1000,
     minHeight: 700,
+    title: "GamePower Launcher (Beta)",
     titleBarStyle: 'hidden',
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
       preload: path.resolve(path.join(__dirname, "preload.js"))
     }
   })
 
   if (isDev) {
-    win.loadURL('http://localhost:3183/index.html');
+    mainWindow.loadURL('http://localhost:3183/index.html');
   } else {
     // 'build/index.html'
-    win.loadURL(`file://${__dirname}/../index.html`);
+    mainWindow.loadURL(`file://${__dirname}/../index.html`);
   }
 
-  win.on('closed', () => win = null);
+  mainWindow.on('closed', () => mainWindow = null);
+
+  // Protocol handler for win32
+  if (process.platform == 'win32') {
+    // Keep only command line / deep linked arguments
+    deeplinkingUrl = process.argv.slice(1)
+  }
+  logEverywhere('createWindow# ' + deeplinkingUrl)
 
   // Hot Reloading
   if (isDev) {
@@ -58,10 +94,24 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  if (win === null) {
+  if (mainWindow === null) {
     createWindow();
   }
 });
+
+if (!app.isDefaultProtocolClient('gamepower')) {
+  // Define custom protocol handler. Deep linking works on packaged versions of the application!
+  app.setAsDefaultProtocolClient('gamepower')
+}
+
+app.on('will-finish-launching', function() {
+  // Protocol handler for osx
+  app.on('open-url', function(event, url) {
+    event.preventDefault()
+    deeplinkingUrl = url
+    logEverywhere('open-url# ' + deeplinkingUrl)
+  })
+})
 
 // Event handler for asynchronous incoming messages
 ipcMain.on('toMain', (event, arg) => {
@@ -83,3 +133,11 @@ ipcMain.on('launchApp', (event, arg) => {
         console.log(data.toString());
     });
  })
+
+ // Log both at dev console and at running node console instance
+function logEverywhere(s:string) {
+  console.log(s)
+  if (mainWindow && mainWindow.webContents) {
+    mainWindow.webContents.executeJavaScript(`console.log("${s}")`)
+  }
+}

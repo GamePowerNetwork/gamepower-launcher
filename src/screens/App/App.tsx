@@ -4,6 +4,7 @@ import GameView from "../GameView/GameView";
 import Home from "../Home/Home";
 import Navigation from "../../components/Navigation/Navigation";
 import { NavbarProvider } from "../../contexts/NavbarContext";
+import { DeeplinkingProvider } from "../../contexts/DeeplinkingContext";
 
 const api: any = (window as any).api;
 
@@ -19,14 +20,16 @@ function App() {
 
   return (
     <Router basename="/">
-      <NavbarProvider>
-        <div className="title-bar fixed top-0 w-full h-10"></div>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/game" element={<GameView />} />
-        </Routes>
-      </NavbarProvider>
+      <DeeplinkingProvider>
+        <NavbarProvider>
+          <div className="title-bar fixed top-0 w-full h-10"></div>
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/game" element={<GameView />} />
+          </Routes>
+        </NavbarProvider>
+      </DeeplinkingProvider>
     </Router>
   );
 }

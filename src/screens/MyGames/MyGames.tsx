@@ -7,19 +7,7 @@ const api: any = (window as any).api;
 const games = [
   {
     title: "Interloper",
-    image: "assets/images/games/interloper/game-thumb.png",
-  },
-  {
-    title: "NeroBot Command",
-    image: "assets/images/games/command/image.png",
-  },
-  {
-    title: "NeroVerse: Spaces",
-    image: "assets/images/games/interloper/game-thumb.png",
-  },
-  {
-    title: "NeroPet Battle Arena",
-    image: "assets/images/games/interloper/game-thumb.png",
+    image: "assets/images/games/interloper/game-thumb.jpg",
   },
 ];
 
@@ -35,7 +23,7 @@ function MyGames() {
     <div className="fixed bottom-0 w-full">
       <div className="py-2 w-full px-10">
         <div className="max-w-7xl m-auto py-8">
-          <h2 className="text-3xl text-slate-900 dark:text-white my-5 font-bold font-[Comfortaa] shadow-lg">
+          <h2 className="text-3xl text-slate-900 dark:text-white my-5 font-bold font-[Comfortaa]">
             Jump Into The NeroVerse
           </h2>
           {/* Games List */}
