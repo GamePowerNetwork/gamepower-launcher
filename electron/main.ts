@@ -1,7 +1,11 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
+const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
+
+// setup the titlebar main process
+setupTitlebar();
 
 require('update-electron-app')()
 const {ipcMain} = require('electron');
@@ -49,6 +53,9 @@ function createWindow() {
     }
   })
 
+  const menu = Menu.buildFromTemplate([]);
+  Menu.setApplicationMenu(menu);
+
   if (isDev) {
     mainWindow.loadURL('http://localhost:3183/index.html');
   } else {
@@ -83,6 +90,9 @@ function createWindow() {
   if (isDev) {
     //win.webContents.openDevTools();
   }
+
+  //attach fullscreen(f11 and not 'maximized') && focus listeners
+  attachTitlebarToWindow(mainWindow);
 }
 
 app.on('ready', createWindow);

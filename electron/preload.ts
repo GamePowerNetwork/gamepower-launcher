@@ -24,7 +24,7 @@ contextBridge.exposeInMainWorld(
 );
 
 window.addEventListener('DOMContentLoaded', () => {
-  new customTitlebar.Titlebar()
+  new customTitlebar.Titlebar({ titleHorizontalAlignment: "left"})
 
   const replaceText = (selector:any, text:any) => {
     const element = document.getElementById(selector)

@@ -38,7 +38,7 @@ function Navigation() {
  return (
   <nav>
    <div className="flex flex-row mt-10 h-12 relative">
-    <div className="flex flex-row items-center fixed z-50 left-4 top-8">
+    <div className="flex flex-row items-center fixed z-50 left-4 top-14">
      <Transition
       as={Fragment}
       show={!isShowing}
@@ -71,7 +71,7 @@ function Navigation() {
       <img src={logo} className="w-28" alt="logo" />
      </Transition>
     </div>
-    <div className="flex flex-row items-center fixed z-50 right-4 top-8">
+    <div className="flex flex-row items-center fixed z-50 right-4 top-14">
      <div className="p-2 rounded-lg bg-black bg-opacity-40 shadow-xl">
       <UserCircleIcon className="h-10 w-10 text-gray-400 text-opacity-50 text-right" />
      </div>

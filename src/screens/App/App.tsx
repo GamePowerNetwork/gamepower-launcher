@@ -23,7 +23,6 @@ function App() {
    <Router basename="/">
     <DeeplinkingProvider>
      <NavbarProvider>
-      <div className="title-bar fixed top-0 w-full h-10"></div>
       <Navigation />
       <Routes>
        <Route path="/" element={<Home />} />
