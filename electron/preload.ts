@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron')
+const customTitlebar = require('custom-electron-titlebar')
 
 contextBridge.exposeInMainWorld(
     "api", {
@@ -21,3 +22,16 @@ contextBridge.exposeInMainWorld(
         }
     }
 );
+
+window.addEventListener('DOMContentLoaded', () => {
+  new customTitlebar.Titlebar()
+
+  const replaceText = (selector:any, text:any) => {
+    const element = document.getElementById(selector)
+    if (element) element.innerText = text
+  }
+
+  for (const type of ['chrome', 'node', 'electron']) {
+    replaceText(`${type}-version`, process.versions[type])
+  }
+})
