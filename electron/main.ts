@@ -46,7 +46,7 @@ function createWindow() {
     minWidth: 1000,
     minHeight: 700,
     title: "GamePower Launcher (Beta)",
-    titleBarStyle: 'hidden',
+    titleBarStyle: 'hiddenInset',
     webPreferences: {
       nodeIntegration: false,
       preload: path.resolve(path.join(__dirname, "preload.js"))

@@ -95,7 +95,7 @@ const renderButtonOutline = (thumb: GameThumbnailConfig) => {
           onClick={() => onButtonClick(thumb)}
           className="relative w-full"
         >
-          <div className="relative h-36 bg-slate-800 rounded-lg shadow-lg ring ring-offset-2 ring-offset-[#1b1b1b] ing-slate-400 group-hover:ring-orange-400 ring-opacity-10">
+          <div className="relative h-36 bg-slate-800 rounded-lg shadow-lg ring ring-offset-2 ring-offset-[#1b1b1b] group-hover:ring-orange-400 ring-opacity-10">
             <img
               className="object-cover w-full h-full rounded-lg"
               src={thumb.image}
@@ -109,7 +109,7 @@ const renderButtonOutline = (thumb: GameThumbnailConfig) => {
           onClick={() => onButtonClick(thumb)}
           className="relative w-full"
         >
-          <div className="relative h-72 bg-slate-800 rounded-lg shadow-lg ring ring-offset-2 ring-offset-[#1b1b1b] ing-slate-400 group-hover:ring-orange-400 ring-opacity-10">
+          <div className="relative h-72 bg-slate-800 rounded-lg shadow-lg ring ring-offset-2 ring-offset-[#1b1b1b] group-hover:ring-orange-400 ring-opacity-10">
             <img
               className="object-cover w-full h-full rounded-lg"
               src={thumb.image}
@@ -123,7 +123,7 @@ const renderButtonOutline = (thumb: GameThumbnailConfig) => {
           onClick={() => onButtonClick(thumb)}
           className="relative w-full"
         >
-          <div className="relative h-36 bg-slate-800 rounded-lg shadow-lg ring ring-offset-2 ring-offset-[#1b1b1b] ing-slate-400 group-hover:ring-orange-400 ring-opacity-10">
+          <div className="relative h-36 bg-slate-800 rounded-lg shadow-lg ring ring-offset-2 ring-offset-[#1b1b1b] group-hover:ring-orange-400 ring-opacity-10">
             <img
               className="object-cover w-full h-full rounded-lg"
               src={thumb.image}
